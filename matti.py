@@ -15,7 +15,7 @@ class Mat2x2f:
         self.m10 = m10
         self.m11 = m11
 
-    def __str__(self):
+    def __str__(self) -> str:
         return(
             "|{: .2f}, {: .2f}|\n" \
             "|{: .2f}, {: .2f}|"
