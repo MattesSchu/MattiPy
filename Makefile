@@ -1,7 +1,6 @@
 init:
-    pip install -r requirements.txt
-
+	pip install -r requirements.txt
 test:
-    py.test tests
-
+	python -m unittest -v tests.hello_world
+	python -m unittest -v tests.test_matrices
 .PHONY: init test
