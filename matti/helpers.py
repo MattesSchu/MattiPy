@@ -35,6 +35,158 @@ class Matf:
             out += (", ".join(str(cell) for cell in row)) + "]"
         return out + "]"
 
+class Mat1x2f(Matf):
+    """ TODO: mas
+    """
+
+    def __init__(self,
+        m00: float, m01):
+       
+        self.m00 = m00
+        self.m01 = m01
+
+    def transpose(self):
+        return Mat2x1f(
+                self.m00,
+                self.m01
+            )
+
+class Mat2x1f(Matf):
+
+    def __init__(self,
+        m00: float,
+        m10: float):
+        
+        self.m00 = m00
+        self.m10 = m10
+
+class Mat1x3f(Matf):
+
+    def __init__(self,
+        m00: float, m01: float, m02: float):
+        
+        self.m00 = m00
+        self.m01 = m01
+        self.m02 = m02
+
+class Mat2x3f(Matf):
+
+    def __init__(self,
+        m00: float, m01: float, m02: float,
+        m10: float, m11: float, m12: float):
+        
+        self.m00 = m00
+        self.m01 = m01
+        self.m02 = m02
+        self.m10 = m10
+        self.m11 = m11
+        self.m12 = m12
+
+    def transpose(self):
+        return Mat3x2f(
+            self.m00, self.m10,
+            self.m01, self.m11,
+            self.m02, self.m12)
+
+class Mat3x1f(Matf):
+
+    def __init__(self, m00:float, m10: float, m20: float):
+        
+        self.m00 = m00
+        self.m10 = m10
+        self.m20 = m20
+
+class Mat3x2f(Matf):
+
+    def __init__(self, m00: float, m01: float, m10: float, m11: float, m20: float, m21: float):
+        
+        self.m00 = m00
+        self.m01 = m01
+        self.m10 = m10
+        self.m11 = m11
+        self.m20 = m20
+        self.m21 = m21
+
+class Mat1x4(Matf):
+
+    def __init__(self, m00: float, m01: float, m02: float, m03:float):
+
+        self.m00 = m00
+        self.m01 = m01
+        self.m02 = m02
+        self.m03 = m03
+
+class Mat2x4(Matf):
+
+    def __init__(self, m00: float, m01: float, m10: float, m11: float, m20: float, m21: float,
+        m30: float, m31: float):
+
+        self.m00 = m00
+        self.m01 = m01
+        self.m10 = m10
+        self.m11 = m11
+        self.m20 = m20
+        self.m21 = m21
+
+class Mat3x4(Matf):
+
+    def __init__(self, m00: float, m01: float, m02: float, m10: float, m11: float, m12: float,
+        m20: float, m21: float, m22: float, m30: float, m31: float, m32: float):
+
+        self.m00 = m00
+        self.m01 = m01
+        self.m02 = m02
+        self.m10 = m10
+        self.m11 = m11
+        self.m12 = m12
+        self.m20 = m20
+        self.m21 = m21
+        self.m22 = m22
+        self.m30 = m30
+        self.m31 = m31
+        self.m32 = m32
+        
+class Mat4x1(Matf):
+
+    def __init__(self, m00: float, m10: float, m20: float, m30:float):
+
+        self.m00 = m00
+        self.m10 = m10
+        self.m20 = m20
+        self.m30 = m30
+
+class Mat4x2(Matf):
+
+    def __init__(self, m00: float, m01: float, m10: float, m11: float, m20: float, m21: float,
+        m30: float, m31: float):
+
+        self.m00 = m00
+        self.m01 = m01
+        self.m10 = m10
+        self.m11 = m11
+        self.m20 = m20
+        self.m21 = m21
+        self.m30 = m30
+        self.m31 = m31
+
+class Mat4x3(Matf):
+
+    def __init__(self, m00: float, m01: float, m02: float, m10: float, m11: float, m12: float,
+        m20: float, m21: float, m22: float, m30: float, m31: float, m32: float):
+
+        self.m00 = m00
+        self.m01 = m01
+        self.m02 = m02
+        self.m10 = m10
+        self.m11 = m11
+        self.m12 = m12
+        self.m20 = m20
+        self.m21 = m21
+        self.m22 = m22
+        self.m30 = m30
+        self.m31 = m31
+        self.m32 = m32
+
 class Mat2x2f(Matf):
 
     def __init__(self, 

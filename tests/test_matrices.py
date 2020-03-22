@@ -2,6 +2,22 @@ from matti import helpers
 
 import unittest
 
+class TestMat1x2(unittest.TestCase):
+
+    mat1x2f = helpers.Mat1x2f(1, 2)
+
+    def test_indices(self):
+
+        self.assertEqual(self.mat1x2f.m00, 1)
+        self.assertEqual(self.mat1x2f.m01, 2)
+
+    def test_transpose(self):
+
+        mat2x1f = self.mat1x2f.transpose()
+
+        self.assertEqual(mat2x1f.m00, 1)
+        self.assertEqual(mat2x1f.m10, 2)
+
 class TestMat2x2(unittest.TestCase):
     
     mat2x2f = helpers.Mat2x2f(
