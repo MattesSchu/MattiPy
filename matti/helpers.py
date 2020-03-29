@@ -42,8 +42,19 @@ class Mat1x2f(Matf):
     def __init__(self,
         m00: float, m01):
        
+        super.__init__()
+
         self.m00 = m00
         self.m01 = m01
+
+        self.row0 = [m00, m01]
+
+        self.col0 = [m00]
+        self.col1 = [m01]
+
+        self.rows = [self.row0]
+
+        self.cols = [self.col0, self.col1]
 
     def transpose(self):
         return Mat2x1f(
@@ -57,17 +68,52 @@ class Mat2x1f(Matf):
         m00: float,
         m10: float):
         
+        super.__init__()
+
         self.m00 = m00
         self.m10 = m10
+
+        self.row0 = [m00]
+        self.row1 = [m10]
+
+        self.col0 = [m00, m10]
+
+        self.rows = [self.row0, self.row1]
+
+        self.cols = [self.col0]
+
+    def transpose(self):
+        return Mat1x2f(
+                self.m00, self.m10
+            )
 
 class Mat1x3f(Matf):
 
     def __init__(self,
         m00: float, m01: float, m02: float):
         
+        super.__init__()
+
         self.m00 = m00
         self.m01 = m01
         self.m02 = m02
+
+        self.row0 = [m00, m01, m02]
+
+        self.col0 = [m00]
+        self.col1 = [m01]
+        self.col2 = [m02]
+
+        self.rows = [self.row0]
+
+        self.cols = [self.col0, self.col1, self.col2]
+
+    def transpose(self):
+        return Mat1x3f(
+                self.m00,
+                self.m01,
+                self.m02
+            )
 
 class Mat2x3f(Matf):
 
@@ -75,12 +121,24 @@ class Mat2x3f(Matf):
         m00: float, m01: float, m02: float,
         m10: float, m11: float, m12: float):
         
+        super.__init__()
+
         self.m00 = m00
         self.m01 = m01
         self.m02 = m02
         self.m10 = m10
         self.m11 = m11
         self.m12 = m12
+
+        self.row0 = [m00, m01, m02]
+        self.row1 = [m10, m11, m12]
+
+        self.col0 = [m00, m10]
+        self.col1 = [m01, m11]
+        self.col2 = [m02, m12]
+
+        self.rows = [self.row0, self.row1]
+        self.cols = [self.col0, self.col1, self. col2]
 
     def transpose(self):
         return Mat3x2f(
@@ -90,16 +148,42 @@ class Mat2x3f(Matf):
 
 class Mat3x1f(Matf):
 
-    def __init__(self, m00:float, m10: float, m20: float):
+    def __init__(self,
+            m00:float,
+            m10: float,
+            m20: float
+        ):
         
+        super.__init__()
+
         self.m00 = m00
         self.m10 = m10
         self.m20 = m20
 
+        self.row0 = [m00]
+        self.row1 = [m10]
+        self.row2 = [m20]
+
+        self.col0 = [m00, m10, m20]
+
+        self.rows = [self.row0, self.row1, self.row2]
+        self.cols = [self.col0]
+
+    def transpose(self):
+        return Mat1x3f(
+                self.m00, self.m10, self.m20
+            )
+
 class Mat3x2f(Matf):
 
-    def __init__(self, m00: float, m01: float, m10: float, m11: float, m20: float, m21: float):
+    def __init__(self,
+            m00: float, m01: float,
+            m10: float, m11: float,
+            m20: float, m21: float
+        ):
         
+        super.__init__()
+
         self.m00 = m00
         self.m01 = m01
         self.m10 = m10
@@ -107,58 +191,177 @@ class Mat3x2f(Matf):
         self.m20 = m20
         self.m21 = m21
 
-class Mat1x4(Matf):
+        self.row0 = [m00, m01]
+        self.row1 = [m10, m11]
+        self.row2 = [m20, m21]
 
-    def __init__(self, m00: float, m01: float, m02: float, m03:float):
+        self.col0 = [m00, m10]
+        self.col1 = [m10, m11]
+
+        self.rows = [self.row0, self.row1, self.row2]
+        self.cols = [self.col0, self.col1]
+
+    def transpose(self):
+        return Mat2x3f(
+                self.m00, self.m10, self.m20,
+                self.m01, self.m11, self.m21
+            )
+
+class Mat1x4f(Matf):
+
+    def __init__(
+            self, m00: float, m01: float, m02: float, m03:float
+        ):
+
+        super.__init__()
 
         self.m00 = m00
         self.m01 = m01
         self.m02 = m02
         self.m03 = m03
 
-class Mat2x4(Matf):
-
-    def __init__(self, m00: float, m01: float, m10: float, m11: float, m20: float, m21: float,
-        m30: float, m31: float):
-
-        self.m00 = m00
-        self.m01 = m01
-        self.m10 = m10
-        self.m11 = m11
-        self.m20 = m20
-        self.m21 = m21
-
-class Mat3x4(Matf):
-
-    def __init__(self, m00: float, m01: float, m02: float, m10: float, m11: float, m12: float,
-        m20: float, m21: float, m22: float, m30: float, m31: float, m32: float):
-
-        self.m00 = m00
-        self.m01 = m01
-        self.m02 = m02
-        self.m10 = m10
-        self.m11 = m11
-        self.m12 = m12
-        self.m20 = m20
-        self.m21 = m21
-        self.m22 = m22
-        self.m30 = m30
-        self.m31 = m31
-        self.m32 = m32
+        self.row0 = [m00, m01, m02, m03]
         
-class Mat4x1(Matf):
+        self.col0 = [m00]
+        self.col1 = [m01]
+        self.col2 = [m02]
+        self.col3 = [m03]
 
-    def __init__(self, m00: float, m10: float, m20: float, m30:float):
+        self.rows = [self.row0]
+        self.cols = [self.col0, self.col1, self.col2, self.col3]
+
+    def transpose(self):
+
+        return Mat4x1f(
+                self.m00,
+                self.m01,
+                self.m02,
+                self.m03,
+            )
+
+class Mat2x4f(Matf):
+
+    def __init__(self,
+            m00: float, m01: float, m02: float, m03: float,
+            m10: float, m11: float, m12: float, m13: float):
+
+        super.__init__()
+
+        self.m00 = m00
+        self.m01 = m01
+        self.m02 = m02
+        self.m03 = m03
+        self.m10 = m10
+        self.m11 = m11
+        self.m12 = m12
+        self.m13 = m13
+
+        self.row0 = [m00, m01, m02, m03]
+        self.row1 = [m10, m11, m12, m13]
+
+        self.col0 = [m00, m10]
+        self.col1 = [m01, m11]
+        self.col2 = [m02, m12]
+        self.col3 = [m03, m13]
+
+        self.rows = [self.row0, self.row1]
+        self.cols = [self.col0, self.col1, self.col2, self.col3]
+
+    def transpose(self):
+
+        return Mat4x2f(
+                self.m00, self.m10,
+                self.m01, self.m11,
+                self.m02, self.m12,
+                self.m03, self.m13,
+            )
+
+class Mat3x4f(Matf):
+
+    def __init__(self,
+            m00: float, m01: float, m02: float, m03: float,
+            m10: float, m11: float, m12: float, m13: float,
+            m20: float, m21: float, m22: float, m23: float,
+        ):
+
+        super.__init__()
+
+        self.m00 = m00
+        self.m01 = m01
+        self.m02 = m02
+        self.m03 = m03
+        self.m10 = m10
+        self.m11 = m11
+        self.m12 = m12
+        self.m13 = m13
+        self.m20 = m20
+        self.m21 = m21
+        self.m22 = m22
+        self.m23 = m23
+
+        self.row0 = [m00, m01, m02, m03]
+        self.row1 = [m10, m11, m12, m13]
+        self.row2 = [m20, m21, m22, m23]
+
+        self.col0 = [m00, m10, m20]
+        self.col1 = [m01, m11, m21]
+        self.col2 = [m02, m12, m22]
+        self.col3 = [m03, m13, m23]
+
+        self.rows = [self.row0, self.row1, self.row2]
+        self.cols = [self.col0, self.col1, self.col2, self.col3]
+
+    def transpose(self):
+        
+        return Mat4x3f(
+                self.m00, self.m10, self.m20,
+                self.m01, self.m11, self.m21,
+                self.m02, self.m03, self.m13,
+                self.m03, self.m13, self.m23
+            )
+        
+class Mat4x1f(Matf):
+
+    def __init__(self,
+            m00: float,
+            m10: float,
+            m20: float,
+            m30:float
+        ):
+
+        super.__init__()
 
         self.m00 = m00
         self.m10 = m10
         self.m20 = m20
         self.m30 = m30
 
-class Mat4x2(Matf):
+        self.row0 = [m00]
+        self.row1 = [m10]
+        self.row2 = [m20]
+        self.row3 = [m30]
 
-    def __init__(self, m00: float, m01: float, m10: float, m11: float, m20: float, m21: float,
-        m30: float, m31: float):
+        self.col0 = [m00, m10, m20, m30]
+
+        self.rows = [self.row0, self.row1, self.row2, self.row3]
+        self.cols = [self.col0]
+
+    def transpose(self):
+        
+        return Mat1x4f(
+            self.m00, self.m10, self.m20, self.m30
+        )
+
+class Mat4x2f(Matf):
+
+    def __init__(self,
+            m00: float, m01: float,
+            m10: float, m11: float,
+            m20: float, m21: float,
+            m30: float, m31: float
+        ):
+
+        super.__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -169,10 +372,34 @@ class Mat4x2(Matf):
         self.m30 = m30
         self.m31 = m31
 
-class Mat4x3(Matf):
+        self.row0 = [m00, m01]
+        self.row1 = [m10, m11]
+        self.row2 = [m20, m21]
+        self.row3 = [m30, m31]
 
-    def __init__(self, m00: float, m01: float, m02: float, m10: float, m11: float, m12: float,
-        m20: float, m21: float, m22: float, m30: float, m31: float, m32: float):
+        self.col0 = [m00, m10, m20, m30]
+        self.col1 = [m01, m11, m21, m31]
+
+        self.rows = [self.row0, self.row1, self.row2, self.row3]
+        self.cols = [self.col0, self.col1]
+
+    def transpose(self):
+        
+        return Mat2x4f(
+                self.m00, self.m10, self.m20, self.m30,
+                self.m01, self.m11, self.m21, self.m31
+            )
+
+class Mat4x3f(Matf):
+
+    def __init__(self,
+            m00: float, m01: float, m02: float,
+            m10: float, m11: float, m12: float,
+            m20: float, m21: float, m22: float,
+            m30: float, m31: float, m32: float
+        ):
+
+        super.__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -186,6 +413,26 @@ class Mat4x3(Matf):
         self.m30 = m30
         self.m31 = m31
         self.m32 = m32
+
+        self.row0 = [m00, m01, m02]
+        self.row1 = [m10, m11, m12]
+        self.row2 = [m20, m21, m22]
+        self.row3 = [m30, m31, m32]
+
+        self.col0 = [m00, m10, m20, m30]
+        self.col1 = [m01, m11, m21, m31]
+        self.col2 = [m02, m12, m22, m32]
+
+        self.rows = [self.row0, self.row1, self.row2, self.row3]
+        self.cols = [self.col0, self.col1, self.col2]
+
+    def transpose(self):
+
+        return Mat3x4f(
+                self.m00, self.m10, self.m20, self.m30,
+                self.m01, self.m11, self.m21, self.m31,
+                self.m02, self.m12, self.m22, self.m32
+            )
 
 class Mat2x2f(Matf):
 
@@ -216,6 +463,14 @@ class Mat2x2f(Matf):
         self.rows.append(self.row1)
         self.cols.append(self.col0)
         self.cols.append(self.col1)
+
+    def transpose(self):
+
+        return Mat2x2f(
+                self.m00, self.m10,
+                self.m01, self.m11
+            )
+    
 
 class Mat3x3f(Matf):
 
@@ -252,6 +507,7 @@ class Mat3x3f(Matf):
         self.row0 = [self.m00, self.m01, self.m02]
         self.row1 = [self.m10, self.m11, self.m12]
         self.row2 = [self.m20, self.m21, self.m22]
+        
         self.col0 = [self.m00, self.m10, self.m20]
         self.col1 = [self.m01, self.m11, self.m21]
         self.col2 = [self.m02, self.m12, self.m22]
@@ -262,6 +518,14 @@ class Mat3x3f(Matf):
         self.cols.append(self.col0)
         self.cols.append(self.col1)
         self.cols.append(self.col2)
+
+    def transpose(self):
+
+        return Mat3x3f(
+                self.m00, self.m10, self.m20,
+                self.m01, self.m11, self.m21,
+                self.m02, self.m12, self.m22
+            )
 
 class Mat4x4f(Matf):
 
@@ -322,3 +586,12 @@ class Mat4x4f(Matf):
         self.cols.append(self.col1)
         self.cols.append(self.col2)
         self.cols.append(self.col3)
+
+    def transpose(self):
+
+        return Mat4x4f(
+                self.m00, self.m10, self.m20, self.m30,
+                self.m01, self.m11, self.m21, self.m31,
+                self.m02, self.m21, self.m22, self.m32,
+                self.m03, self.m31, self.m32, self.m33
+            )
