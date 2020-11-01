@@ -1,7 +1,8 @@
 from sys import float_info
 
 class Matf:
-
+    """ TODO
+    """ 
     def __init__(self):
         """ Rows run horizontally, cols run vertically
             It is a row-major repesentation
@@ -16,17 +17,17 @@ class Matf:
                 ...
                 A[i][j] = mij
         """
-        self.rows = []
-        self.cols = []
-        self.max = float_info.min
-        self.min = float_info.max
+        self.__rows = []
+        self.__cols = []
+        self.__max = float_info.min
+        self.__min = float_info.max
 
     def __str__(self) -> str:
         """ Prints the Matrix
         """
         first = True
         out = "["
-        for row in self.rows:
+        for row in self.__rows:
             if first:
                 out += "["
                 first = False
@@ -35,64 +36,76 @@ class Matf:
             out += (", ".join(str(cell) for cell in row)) + "]"
         return out + "]"
 
+    def get_rows(self) -> list:
+        return self.__rows.copy()
+    
+    def get_cols(self) -> list:
+        return self.__cols.copy()
+
 class Mat1x2f(Matf):
     """ TODO: mas
     """
 
     def __init__(self,
         m00: float, m01):
-       
-        super.__init__()
-
-        self.m00 = m00
-        self.m01 = m01
+        super().__init__()
 
         self.row0 = [m00, m01]
-
         self.col0 = [m00]
         self.col1 = [m01]
-
-        self.rows = [self.row0]
-
-        self.cols = [self.col0, self.col1]
+        self.__rows = [self.row0]
+        self.__cols = [self.col0, self.col1]
 
     def transpose(self):
+        """ Transposes the matrix
+
+        It is important to notice that this method returns
+        a newly created matrix. This is based on the Math
+        structure this module has.
+        """
         return Mat2x1f(
-                self.m00,
-                self.m01
+                self.row0[0],
+                self.row0[1]
             )
+
+    def set_m00(self, m00):
+        self.row0[0] = m00
+        self.col0[0] = m00
+
+    def set_m01(self, m01):
+        self.row0[1] = m01
+        self.col1[0] = m01
+
+    def m00(self): return self.row0[0]
+    def m01(self): return self.row0[1]
 
 class Mat2x1f(Matf):
 
     def __init__(self,
-        m00: float,
-        m10: float):
-        
-        super.__init__()
-
-        self.m00 = m00
-        self.m10 = m10
+            m00: float,
+            m10: float):
+        super().__init__()
 
         self.row0 = [m00]
         self.row1 = [m10]
-
         self.col0 = [m00, m10]
-
         self.rows = [self.row0, self.row1]
-
         self.cols = [self.col0]
 
     def transpose(self):
         return Mat1x2f(
-                self.m00, self.m10
+                self.row0[0], self.row1[0]
             )
+
+    def m00(self): return self.row0[0]
+    def m10(self): return self.col0[0]
 
 class Mat1x3f(Matf):
 
     def __init__(self,
         m00: float, m01: float, m02: float):
         
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -121,7 +134,7 @@ class Mat2x3f(Matf):
         m00: float, m01: float, m02: float,
         m10: float, m11: float, m12: float):
         
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -154,7 +167,7 @@ class Mat3x1f(Matf):
             m20: float
         ):
         
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m10 = m10
@@ -182,7 +195,7 @@ class Mat3x2f(Matf):
             m20: float, m21: float
         ):
         
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -213,7 +226,7 @@ class Mat1x4f(Matf):
             self, m00: float, m01: float, m02: float, m03:float
         ):
 
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -245,7 +258,7 @@ class Mat2x4f(Matf):
             m00: float, m01: float, m02: float, m03: float,
             m10: float, m11: float, m12: float, m13: float):
 
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -284,7 +297,7 @@ class Mat3x4f(Matf):
             m20: float, m21: float, m22: float, m23: float,
         ):
 
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -329,7 +342,7 @@ class Mat4x1f(Matf):
             m30:float
         ):
 
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m10 = m10
@@ -361,7 +374,7 @@ class Mat4x2f(Matf):
             m30: float, m31: float
         ):
 
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -399,7 +412,7 @@ class Mat4x3f(Matf):
             m30: float, m31: float, m32: float
         ):
 
-        super.__init__()
+        super().__init__()
 
         self.m00 = m00
         self.m01 = m01
@@ -459,10 +472,8 @@ class Mat2x2f(Matf):
         self.col0 = [self.m00, self.m10]
         self.col1 = [self.m01, self.m11]
 
-        self.rows.append(self.row0)
-        self.rows.append(self.row1)
-        self.cols.append(self.col0)
-        self.cols.append(self.col1)
+        self.rows = [self.row0, self.row1]
+        self.cols = [self.col0, self.col1]
 
     def transpose(self):
 
@@ -473,7 +484,6 @@ class Mat2x2f(Matf):
     
 
 class Mat3x3f(Matf):
-
     def __init__(self,
         m00 : float, m01 : float, m02 : float,
         m10 : float, m11 : float, m12 : float,
@@ -512,15 +522,10 @@ class Mat3x3f(Matf):
         self.col1 = [self.m01, self.m11, self.m21]
         self.col2 = [self.m02, self.m12, self.m22]
 
-        self.rows.append(self.row0)
-        self.rows.append(self.row1)
-        self.rows.append(self.row2)
-        self.cols.append(self.col0)
-        self.cols.append(self.col1)
-        self.cols.append(self.col2)
+        self.rows = [self.row0, self.row1, self.row2]
+        self.cols = [self.col0, self.col1, self.col2]
 
     def transpose(self):
-
         return Mat3x3f(
                 self.m00, self.m10, self.m20,
                 self.m01, self.m11, self.m21,
@@ -528,12 +533,13 @@ class Mat3x3f(Matf):
             )
 
 class Mat4x4f(Matf):
-
+    """ TODO
+    """ 
     def __init__(self,
-        m00 : float, m01 : float, m02 : float, m03: float,
-        m10 : float, m11 : float, m12 : float, m13: float,
-        m20 : float, m21 : float, m22 : float, m23: float,
-        m30 : float, m31 : float, m32 : float, m33: float
+        m00: float, m01: float, m02: float, m03: float,
+        m10: float, m11: float, m12: float, m13: float,
+        m20: float, m21: float, m22: float, m23: float,
+        m30: float, m31: float, m32: float, m33: float
 		):
         """Initialization of the 3x3 Matrix in column Major representation.
         
@@ -578,14 +584,8 @@ class Mat4x4f(Matf):
         self.col2 = [self.m02, self.m12, self.m22, self.m32]
         self.col3 = [self.m03, self.m13, self.m23, self.m33]
 
-        self.rows.append(self.row0)
-        self.rows.append(self.row1)
-        self.rows.append(self.row2)
-        self.rows.append(self.row3)
-        self.cols.append(self.col0)
-        self.cols.append(self.col1)
-        self.cols.append(self.col2)
-        self.cols.append(self.col3)
+        self.rows = [self.row0, self.row1, self.row2, self.row3]
+        self.cols = [self.col0, self.col1, self.col2, self.col3]
 
     def transpose(self):
 

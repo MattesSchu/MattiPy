@@ -15,7 +15,7 @@ setup(
     description='Learning python by writing my personal Matrix library',
     long_description=readme,
     author='Mattes Schumann',
-    author_email='me@kennethreitz.com',
+    author_email='mattes.schumann@gmx.de',
     url='https://github.com/MattesSchu/PyMatti',
     license=license,
     packages=find_packages(exclude=('tests'))#, 'docs'))
