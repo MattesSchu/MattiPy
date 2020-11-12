@@ -1,9 +1,9 @@
-from matti import helpers
+from matti import matrices
 
 import unittest
 
 class TestMat1x2(unittest.TestCase):
-    mat1x2f = helpers.Mat1x2f(1, 2)
+    mat1x2f = matrices.Mat1x2f(1, 2)
 
     def test_transpose(self):
         mat2x1f = self.mat1x2f.transpose()
@@ -12,119 +12,92 @@ class TestMat1x2(unittest.TestCase):
 
     def test_get_rows(self):
         rows = self.mat1x2f.get_rows()
-        self.assertEquals(len(rows), 2)
-        self.assertEquals(rows[0][0], 1)
-        self.assertEquals(rows[1][0], 2)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0][0], 1)
+        self.assertEqual(rows[0][1], 2)
     
     def test_get_cols(self):
         cols = self.mat1x2f.get_cols()
-        self.assertEquals(len(cols), 1)
-        self.assertEquals(cols[0][0], 1)
-        self.assertEquals(cols[0][1], 2)
+        self.assertEqual(len(cols), 2)
+        self.assertEqual(cols[0][0], 1)
+        self.assertEqual(cols[1][0], 2)
+
+class TestMat2x1(unittest.TestCase):
+    mat2x1f = matrices.Mat2x1f(1, 2)
+
+    def test_transpose(self):
+        mat1x2f = self.mat2x1f.transpose()
+        self.assertEqual(mat1x2f.m00(), 1)
+        self.assertEqual(mat1x2f.m01(), 2)
+
+    def test_get_rows(self):
+        rows = self.mat2x1f.get_rows()
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[0][0], 1)
+        self.assertEqual(rows[1][0], 2)
+    
+    def test_get_cols(self):
+        cols = self.mat2x1f.get_cols()
+        self.assertEqual(len(cols), 1)
+        self.assertEqual(cols[0][0], 1)
+        self.assertEqual(cols[0][1], 2)
 
 class TestMat2x2(unittest.TestCase):
-    mat2x2f = helpers.Mat2x2f(
+    mat2x2f = matrices.Mat2x2f(
         1, 2,
         3, 4,
     )
 
-    def test_mat_row(self):
-        self.assertEqual(self.mat2x2f.row0, [1, 2])
-        self.assertEqual(self.mat2x2f.row1, [3, 4])
+    def test_transpose(self):
+        mat2x2f_transposed = self.mat2x2f.transpose()
+        self.assertEqual(mat2x2f_transposed.m00(), 1)
+        self.assertEqual(mat2x2f_transposed.m01(), 3)
+        self.assertEqual(mat2x2f_transposed.m10(), 2)
+        self.assertEqual(mat2x2f_transposed.m11(), 4)
 
-    def test_mat_col(self):
-        self.assertEqual(self.mat2x2f.col0, [1, 3])
-        self.assertEqual(self.mat2x2f.col1, [2, 4])
+    def test_get_rows(self):
+        rows = self.mat2x2f.get_rows()
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[0][0], 1)
+        self.assertEqual(rows[0][1], 2)
+        self.assertEqual(rows[1][0], 3)
+        self.assertEqual(rows[1][1], 4)
+    
+    def test_get_cols(self):
+        cols = self.mat2x2f.get_cols()
+        self.assertEqual(len(cols), 2)
+        self.assertEqual(cols[0][0], 1)
+        self.assertEqual(cols[0][1], 3)
+        self.assertEqual(cols[1][0], 2)
+        self.assertEqual(cols[1][1], 4)
 
-    def test_mat_members(self):
-        self.assertEqual(self.mat2x2f.m00, 1)
-        self.assertEqual(self.mat2x2f.m01, 2)
-        self.assertEqual(self.mat2x2f.m10, 3)
-        self.assertEqual(self.mat2x2f.m11, 4)
+    def test_dot_ones(self):
+        ones = matrices.Mat2x2f(1,1,1,1)
+        res = matrices.dot(ones, ones)
+        self.assertEqual(res.m00(), 2)
+        self.assertEqual(res.m01(), 2)
+        self.assertEqual(res.m10(), 2)
+        self.assertEqual(res.m11(), 2)
 
-    def test_mat_string(self):
-        res = "[[1, 2]\n [3, 4]]" 
-        self.assertEqual(str(self.mat2x2f), res)
+    def test_dot_zeroes(self):
+        ones = matrices.Mat2x2f(0, 0, 0, 0)
+        res = matrices.dot(ones, ones)
+        self.assertEqual(res.m00(), 0)
+        self.assertEqual(res.m01(), 0)
+        self.assertEqual(res.m10(), 0)
+        self.assertEqual(res.m11(), 0)
 
-class TestMat3x3(unittest.TestCase):
-    mat3x3f = helpers.Mat3x3f(
-        1, 2, 3,
-        4, 5, 6,
-        7, 8, 9)
-
-    def test_mat_row(self):
-        self.assertEqual(self.mat3x3f.row0, [1, 2, 3])
-        self.assertEqual(self.mat3x3f.row1, [4, 5, 6])
-        self.assertEqual(self.mat3x3f.row2, [7, 8, 9])
-
-    def test_mat_col(self):
-        self.assertEqual(self.mat3x3f.col0, [1, 4, 7])
-        self.assertEqual(self.mat3x3f.col1, [2, 5, 8])
-        self.assertEqual(self.mat3x3f.col2, [3, 6, 9])
-
-    def test_mat_members(self):
-        self.assertEqual(self.mat3x3f.m00, 1)
-        self.assertEqual(self.mat3x3f.m01, 2)
-        self.assertEqual(self.mat3x3f.m02, 3)
-        self.assertEqual(self.mat3x3f.m10, 4)
-        self.assertEqual(self.mat3x3f.m11, 5)
-        self.assertEqual(self.mat3x3f.m12, 6)
-        self.assertEqual(self.mat3x3f.m20, 7)
-        self.assertEqual(self.mat3x3f.m21, 8)
-        self.assertEqual(self.mat3x3f.m22, 9)
-
-    def test_mat_string(self):
-        res = "[[1, 2, 3]\n [4, 5, 6]\n [7, 8, 9]]" 
-
-        self.assertEqual(str(self.mat3x3f), res)
-
-class TestMat4x4(unittest.TestCase):
-    mat4x4f = helpers.Mat4x4f(
-             1,  2,  3,  4,
-             5,  6,  7,  8,
-             9, 10, 11, 12,
-            13, 14, 15, 16,
-        )
-
-    def test_mat_row(self):
-
-        self.assertEqual(self.mat4x4f.row0, [1, 2, 3, 4])
-        self.assertEqual(self.mat4x4f.row1, [5, 6, 7, 8])
-        self.assertEqual(self.mat4x4f.row2, [9, 10, 11, 12])
-        self.assertEqual(self.mat4x4f.row3, [13, 14, 15, 16])
-
-    def test_mat_col(self):
-        self.assertEqual(self.mat4x4f.col0, [1, 5, 9, 13])
-        self.assertEqual(self.mat4x4f.col1, [2, 6, 10, 14])
-        self.assertEqual(self.mat4x4f.col2, [3, 7, 11, 15])
-        self.assertEqual(self.mat4x4f.col3, [4, 8, 12, 16])
-
-    def test_mat_members(self):
-        self.assertEqual(self.mat4x4f.m00, 1)
-        self.assertEqual(self.mat4x4f.m01, 2)
-        self.assertEqual(self.mat4x4f.m02, 3)
-        self.assertEqual(self.mat4x4f.m03, 4)
-        self.assertEqual(self.mat4x4f.m10, 5)
-        self.assertEqual(self.mat4x4f.m11, 6)
-        self.assertEqual(self.mat4x4f.m12, 7)
-        self.assertEqual(self.mat4x4f.m13, 8)
-        self.assertEqual(self.mat4x4f.m20, 9)
-        self.assertEqual(self.mat4x4f.m21, 10)
-        self.assertEqual(self.mat4x4f.m22, 11)
-        self.assertEqual(self.mat4x4f.m23, 12)
-        self.assertEqual(self.mat4x4f.m30, 13)
-        self.assertEqual(self.mat4x4f.m31, 14)
-        self.assertEqual(self.mat4x4f.m32, 15)
-        self.assertEqual(self.mat4x4f.m33, 16)
-
-    def test_mat_string(self):
-        res = "[[1, 2, 3, 4]\n [5, 6, 7, 8]\n [9, 10, 11, 12]\n [13, 14, 15, 16]]" 
-
-        self.assertEqual(str(self.mat4x4f), res)
+    def test_dot_easy(self):
+        ones = matrices.Mat2x2f(1, 2, 3, 4)
+        res = matrices.dot(ones, ones)
+        self.assertEqual(res.m00(), 7)
+        self.assertEqual(res.m01(), 10)
+        self.assertEqual(res.m10(), 15)
+        self.assertEqual(res.m11(), 22)
 
 class Test2Matrices(unittest.TestCase):
-    first = helpers.Mat1x2f(1, 2)
-    second = helpers.Mat1x2f(2, 1)
+    first = matrices.Mat1x2f(1, 2)
+    second = matrices.Mat1x2f(2, 1)
 
     def test_members(self):
         self.assertEqual(self.first.m00(), 1)
@@ -132,16 +105,10 @@ class Test2Matrices(unittest.TestCase):
         self.assertEqual(self.second.m00(), 2)
         self.assertEqual(self.second.m01(), 1)
 
-    # def test_addition(self):
-    #     sum = first + second
-
-    #     self.assertEqual(self.first.m00, 1)
-    #     self.assertEqual(self.first.m01, 2)
-    #     self.assertEqual(self.second.m00, 2)
-    #     self.assertEqual(self.second.m01, 1)
-    #     self.assertEqual(self.sum.m00, 3)
-    #     self.assertEqual(self.sum.m01, 3)
-
+    def test_add(self):
+        sum_of_2 = self.first + self.second
+        self.assertEqual(sum_of_2.m00(), 3)
+        self.assertEqual(sum_of_2.m01(), 3) 
 
 if __name__ == '__main__':
     unittest.main()
