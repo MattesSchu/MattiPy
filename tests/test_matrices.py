@@ -95,6 +95,36 @@ class TestMat2x2(unittest.TestCase):
         self.assertEqual(res.m10(), 15)
         self.assertEqual(res.m11(), 22)
 
+class TestMatricesMultiplication(unittest.TestCase):
+    first = matrices.Mat3x1f(1, 2, 3)
+    second = matrices.Mat1x3f(1, 2, 3)
+    single = matrices.Mat1x1f(2)
+
+    def test_3x1_dot_1x3(self):
+        res = matrices.dot(self.first, self.second)
+        self.assertEqual(res.col_dimension(), 3)
+        self.assertEqual(res.row_dimension(), 3)
+        self.assertEqual(res.m00(), 1)
+        self.assertEqual(res.m01(), 2)
+        self.assertEqual(res.m02(), 3)
+        self.assertEqual(res.m10(), 2)
+        self.assertEqual(res.m11(), 4)
+        self.assertEqual(res.m12(), 6)
+        self.assertEqual(res.m20(), 3)
+        self.assertEqual(res.m21(), 6)
+        self.assertEqual(res.m22(), 9)
+
+    def test_1x3_dot_3x1(self):
+        res = matrices.dot(self.second, self.first)
+        self.assertEqual(res.col_dimension(), 1)
+        self.assertEqual(res.row_dimension(), 1)
+        self.assertEqual(res.m00(), 14)
+
+    def test_1x1_dat_1x3f(self):
+        res = matrices.dot(self.single, self.second)
+        self.assertEqual(res.col_dimension(), 3)
+        self.assertEqual(res.row_dimension(), 1)
+
 class Test2Matrices(unittest.TestCase):
     first = matrices.Mat1x2f(1, 2)
     second = matrices.Mat1x2f(2, 1)
@@ -109,6 +139,11 @@ class Test2Matrices(unittest.TestCase):
         sum_of_2 = self.first + self.second
         self.assertEqual(sum_of_2.m00(), 3)
         self.assertEqual(sum_of_2.m01(), 3) 
+
+    def test_sub(self):
+        sub_of_2 = self.first - self.second
+        self.assertEqual(sub_of_2.m00(), -1)
+        self.assertEqual(sub_of_2.m01(), 1)
 
 if __name__ == '__main__':
     unittest.main()
